@@ -19,6 +19,7 @@ Usage:
         print(f"Ayah {result.ayah.ayah_number}: {result.start_time:.2f}s - {result.end_time:.2f}s")
 """
 
+from munajjam._version import __version__
 from munajjam.config import MunajjamSettings, configure, get_settings
 from munajjam.exceptions import (
     AlignmentError,
@@ -29,6 +30,12 @@ from munajjam.exceptions import (
     QuranDataError,
     TranscriptionError,
 )
+from munajjam.formatters import (
+    AlignmentMetadata,
+    AlignmentOutput,
+    FormattedAyahResult,
+    format_alignment_results,
+)
 from munajjam.models import (
     AlignmentResult,
     Ayah,
@@ -37,7 +44,6 @@ from munajjam.models import (
     Surah,
 )
 
-__version__ = "2.0.0a1"
 __all__ = [
     # Version
     "__version__",
@@ -51,6 +57,11 @@ __all__ = [
     "MunajjamSettings",
     "get_settings",
     "configure",
+    # Formatters
+    "AlignmentOutput",
+    "FormattedAyahResult",
+    "AlignmentMetadata",
+    "format_alignment_results",
     # Exceptions
     "MunajjamError",
     "TranscriptionError",
