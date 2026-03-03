@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "munajjam"
+version = "0.1.0"
+description = "Quranic Recitation Alignment Tool"
+requires-python = ">=3.8"
+dependencies = [
+    "faster-whisper",
+    "pydantic",
+]
+
+[project.scripts]
+munajjam = "munajjam.cli:main"
