@@ -1,0 +1,37 @@
+import pytest
+from unittest.mock import MagicMock, patch
+import importlib.util
+import os
+import sys
+import types
+
+def test_example_01_smoke():
+    """Ultimate smoke test that works regardless of directory structure."""
+    
+    # 1. ????? ???? ???????? ???? ?? ??????? ?????? ??? ????????
+    mock_munajjam = types.ModuleType("munajjam")
+    mock_core = types.ModuleType("munajjam.core")
+    mock_aligner = types.ModuleType("munajjam.core.aligner")
+    
+    # ????? ????
+    sys.modules["munajjam"] = mock_munajjam
+    sys.modules["munajjam.core"] = mock_core
+    sys.modules["munajjam.core.aligner"] = mock_aligner
+    mock_core.aligner = mock_aligner
+    
+    # ????? ?????? ???????
+    mock_align = MagicMock(return_value=[{"ayah": "1", "score": 0.9}])
+    mock_aligner.align = mock_align
+    
+    # 2. ??????? ?????? ???????? importlib (?????? ????? ?????? 01)
+    example_path = os.path.join("examples", "01_simple_alignment.py")
+    spec = importlib.util.spec_from_file_location("example_module", example_path)
+    example_module = importlib.util.module_from_spec(spec)
+    
+    # ????? ??????
+    spec.loader.exec_module(example_module)
+    result = example_module.run_example()
+    
+    # 3. ??????
+    assert result is True
+    assert mock_align.called
